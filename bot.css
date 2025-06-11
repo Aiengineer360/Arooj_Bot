@@ -1,0 +1,275 @@
+/* Colab Theme Colors */
+:root {
+    --colab-primary-text: #3c4043;
+    --colab-secondary-text: #5f6368;
+    --colab-orange: #f29900;
+    --colab-orange-hover: #e88d00;
+    --colab-border: #e0e0e0;
+    --colab-background: #f8f9fa;
+    --colab-message-bg: #ffffff;
+    --colab-user-message-bg: #f1f3f4;
+}
+
+/* Colab Navbar Styles */
+.colab-navbar {
+    background-color: white;
+    border-bottom: 1px solid var(--colab-border);
+    padding: 4px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.filename {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--colab-primary-text);
+}
+
+.right-section {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+    background-color: var(--colab-background);
+}
+
+.material-icons {
+    color: var(--colab-secondary-text);
+    font-size: 24px;
+}
+
+/* Main Layout */
+body {
+    background-color: white;
+    min-height: 100vh;
+    color: var(--colab-primary-text);
+    padding-bottom: 36px; /* Match footer height */
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container-fluid {
+    min-height: calc(100vh - 92px); /* 56px header + 36px footer */
+    margin-top: 0;
+    padding-bottom: 36px; /* Match footer height */
+}
+
+.sidebar {
+    background-color: white;
+    height: calc(100vh - 56px);
+    border-right: 1px solid var(--colab-border);
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+.main-content {
+    height: calc(100vh - 56px);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.chat-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: white;
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 40px;
+    color: var(--colab-secondary-text);
+}
+
+.message {
+    margin-bottom: 20px;
+    width: fit-content;
+    max-width: 80%;
+}
+
+.user-message {
+    margin-left: auto;
+}
+
+.bot-message {
+    margin-right: auto;
+}
+
+.message-content {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background-color: var(--colab-message-bg);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.user-message .message-content {
+    background-color: var(--colab-user-message-bg);
+    flex-direction: row-reverse;
+}
+
+.bot-message .message-content {
+    background-color: white;
+    border: 1px solid var(--colab-border);
+}
+
+.message-content i {
+    font-size: 1.5rem;
+    color: var(--colab-secondary-text);
+    flex-shrink: 0;
+}
+
+.message-text {
+    line-height: 1.5;
+    color: var(--colab-primary-text);
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.input-container {
+    padding: 20px;
+    background-color: white;
+    border-top: 1px solid var(--colab-border);
+    margin-bottom: 40px; /* Add space for footer */
+    position: relative;
+    z-index: 101; /* Place above footer */
+}
+
+.input-container form {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.info-box {
+    background-color: var(--colab-background);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid var(--colab-border);
+}
+
+#query {
+    border-radius: 20px;
+    padding: 10px 20px;
+    border: 1px solid var(--colab-border);
+    transition: border-color 0.2s;
+}
+
+#query:focus {
+    border-color: var(--colab-orange);
+    box-shadow: 0 0 0 2px rgba(242, 153, 0, 0.2);
+    outline: none;
+}
+
+.btn-primary {
+    background-color: var(--colab-orange);
+    border-color: var(--colab-orange);
+    border-radius: 20px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--colab-orange-hover);
+    border-color: var(--colab-orange-hover);
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 2px rgba(242, 153, 0, 0.2);
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #5f6368;
+    z-index: 100;
+    height: 36px; /* Explicit height */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .main-content {
+        height: calc(100vh - 56px);
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .input-container {
+        padding: 15px;
+    }
+
+    .colab-navbar {
+        padding: 4px 8px;
+    }
+
+    .filename {
+        font-size: 0.9rem;
+    }
+
+    .icon-button {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #dadce0;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #bdc1c6;
+} 

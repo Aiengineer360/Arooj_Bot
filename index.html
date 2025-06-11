@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROOJ BOT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="bot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Main Navbar -->
+        <div class="colab-navbar">
+            <div class="top-row">
+                <div class="left-section">
+                    <div class="logo">
+                        <img src="https://colab.research.google.com/img/colab_favicon.ico" alt="Colab Logo">
+                    </div>
+                    <div class="filename">AROOJ FATIMA.ai</div>
+                </div>
+
+                <div class="right-section">
+                    <div class="icon-button">
+                        <span class="material-icons">refresh</span>
+                    </div>
+                    <div class="icon-button">
+                        <span class="material-icons">smart_toy</span>
+                    </div>
+                    <div class="icon-button">
+                        <span class="material-icons">apps</span>
+                    </div>
+                    <div class="icon-button">
+                        <span class="material-icons">account_circle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-0">
+            <!-- Sidebar - hidden on mobile -->
+            <div class="col-md-3 col-lg-2 sidebar d-none d-md-block">
+                <div class="d-flex flex-column p-3">
+                    <h4 class="mb-4">AROOJ Bot</h4>
+                    <div class="info-box">
+                        <h6>About</h6>
+                        <p>This bot provides basic information about my education, experiences, projects, interests etc.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-12 col-md-9 col-lg-10 main-content">
+                <div class="chat-container" id="chat-container">
+                    <div class="welcome-message">
+                        <h5>Welcome to AROOJ BOT!</h5>
+                        <p>Ask any question about Arooj</p>
+                    </div>
+                    <div id="chat-messages"></div>
+                </div>
+
+                <!-- Input Form -->
+                <div class="input-container">
+                    <form id="chat-form" class="d-flex" autocomplete="off">
+                        <input type="text" 
+                               name="query" 
+                               id="query" 
+                               class="form-control" 
+                               placeholder="Ask me anything..." 
+                               required
+                               autocomplete="off"
+                               autocapitalize="off"
+                               spellcheck="false"
+                               data-form-type="other"
+                               aria-autocomplete="none">
+                        <button type="submit" class="btn btn-primary ms-2">
+                            <i class="bi bi-send"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <footer class="footer">
+                    <p>Powered by Arooj Fatima</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Clear chat history on page load
+        window.addEventListener('load', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = '';
+            localStorage.clear();
+            sessionStorage.clear();
+        });
+
+        // Auto-scroll to bottom of chat
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Add message to chat
+        function addMessage(content, isUser = false) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <i class="bi ${isUser ? 'bi-person-circle' : 'bi-robot'}"></i>
+                    <div class="message-text">${content}</div>
+                </div>
+            `;
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // Handle form submission
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('query');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    addMessage('Error: ' + data.error);
+                } else {
+                    addMessage(data.response);
+                }
+            } catch (error) {
+                addMessage('Error: Could not connect to the server');
+            }
+        });
+
+        // Clear chat when leaving/refreshing page
+        window.addEventListener('beforeunload', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
